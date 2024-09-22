@@ -1,11 +1,12 @@
-Feature: Orange HRM Login Feature
+Feature: Orange HRM Admin Feature
 
-Scenario Outline: Login Orange HRM with valid credentials
+Scenario: Login Orange HRM and navigate to Admin Tab
 Given user is on the organgehrm login page
 When user enters valid username "<username>"
 And user enters valid password "<password>"
 And user clicks on the login button
-Then user will be navigated to Dashboard page
+And user clicks on Admin Tab
+Then user will be navigated to Admin page
 
 Examples:
 |username|password|

@@ -1,26 +1,26 @@
 import {Browser, Page, expect, chromium} from "@playwright/test";
 import {Given, When, Then} from '@cucumber/cucumber';
+import { pageFixture } from "../../hooks/pageFixture";
+import { LoginPage } from "../pages/loginPage";
 
-let browser:Browser;
-let page:Page;
+let loginPage:LoginPage;
 
 Given('user is on the organgehrm login page', async function () {
-    browser = await chromium.launch();
-    page = await browser.newPage();
-    await page.goto("https://opensource-demo.orangehrmlive.com/");
+    loginPage = new LoginPage(pageFixture.page);
+    await loginPage.navigateTo("https://opensource-demo.orangehrmlive.com/");
 });
 
-When('user enters valid username', async function () {
-    await page.locator('input[name="username"]').fill('Admin');
+When('user enters valid username {string}', async function (username: string) {
+    await loginPage.enterUsername(username);
 });
 
-When('user enters valid password', async function () {
-    await page.locator('input[name="password"]').fill('admin123');
+When('user enters valid password {string}', async function (password: string) {
+    await loginPage.enterPassword(password);
 });
 
 When('user clicks on the login button', async function () {
-    await page.locator('button[type="submit"]').click(); 
+    await loginPage.clickLogin();
 });
 Then('user will be navigated to Dashboard page', async function () {
-    await expect(page.locator('.oxd-topbar-header-title')).toBeVisible();
+    await expect(pageFixture.page.locator('.oxd-topbar-header-title')).toBeVisible();
 });
